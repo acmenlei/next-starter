@@ -21,6 +21,10 @@
 
 权限控制可以直接使用 `useAccess` hook
 
+## 状态管理
+
+状态管理，我们使用的是 zustand，[点击查看 zustand 介绍](https://github.com/pmndrs/zustand)，相比于 redux，zustand 更加轻量、简单易用，具体写法可查看文档了解。
+
 ## 其他
 
 todo...
