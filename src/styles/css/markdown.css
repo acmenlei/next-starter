@@ -1,0 +1,19 @@
+.markdown-body pre {
+  @apply !p-0;
+}
+
+.markdown-body blockquote {
+  @apply border-l-4 border-primary/10;
+}
+
+.markdown-body p {
+  @apply mt-0;
+}
+
+.markdown-body ul {
+  list-style: outside;
+}
+
+.markdown-body ol {
+  list-style: decimal outside;
+}

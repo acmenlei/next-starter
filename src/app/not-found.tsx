@@ -1,25 +1,29 @@
-import { Metadata } from 'next';
-import Link from 'next/link';
-import * as React from 'react';
-import { RiAlarmWarningFill } from 'react-icons/ri';
+import { Metadata } from "next";
+import Link from "next/link";
+import * as React from "react";
 
 export const metadata: Metadata = {
-  title: '啊哦，好像走丢了～',
+  title: "页面走丢了 - 404",
+  description: "抱歉，您访问的页面不存在",
 };
 
 export default function NotFound() {
   return (
-    <main>
-      <section className='bg-white'>
-        <div className='layout flex min-h-screen flex-col items-center justify-center text-center text-black'>
-          <RiAlarmWarningFill
-            size={60}
-            className='drop-shadow-glow animate-flicker text-red-500'
-          />
-          <h1 className='mt-8 text-4xl md:text-6xl'>哎呀，页面走丢了</h1>
-          <Link href='/' className=' mt-4'>回到首页</Link>
-        </div>
-      </section>
+    <main className="min-h-[calc(100vh-112px)] flex items-center justify-center">
+      <div className="flex flex-col gap-6 items-center justify-center px-4 text-center">
+        <h1 className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+          404
+        </h1>
+        <h2 className="text-2xl md:text-4xl font-bold text-gray-800 dark:text-gray-200">
+          页面走丢了
+        </h2>
+        <Link
+          href="/"
+          className="bg-primary text-white px-4 py-2 rounded-md hover:underline"
+        >
+          回到首页
+        </Link>
+      </div>
     </main>
   );
 }
