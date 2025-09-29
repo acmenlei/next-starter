@@ -12,7 +12,7 @@ type GlobalHeaderProps = {};
  */
 export default function GlobalHeader(props: GlobalHeaderProps) {
   return (
-    <div className="flex h-14 shadow py-1 px-4 justify-between items-center">
+    <div className="flex h-14 shadow py-1 px-4 justify-between items-center sticky top-0 z-10 bg-background">
       <Navgation />
       <div className="flex items-center gap-2">
         <LoginTrigger />

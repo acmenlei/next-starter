@@ -8,6 +8,7 @@ type MarkdownNavBarProps = {
   // data?: API.CourseArticleVO;
   renderContainer?: string;
   scroller?: HTMLElement | null;
+  offsetTop?: number;
 };
 
 type HeadingItem = {
@@ -25,7 +26,7 @@ const GAP_DISTANCE = 60; // 距离
  * @returns
  */
 export default function MarkdownNavBar(props: MarkdownNavBarProps) {
-  const { data, scroller, renderContainer } = props;
+  const { data, scroller, renderContainer, offsetTop = 0 } = props;
   const [headings, setHeadings] = useState<HeadingItem[]>([]);
   const [curHeading, setCurHeading] = useState<HeadingItem>();
   const [isClickScrolling, setIsClickScrolling] = useState(false);
@@ -73,18 +74,36 @@ export default function MarkdownNavBar(props: MarkdownNavBarProps) {
   /**
    * 滚动到目标元素
    */
-  const scrollTo = useCallback((heading: HeadingItem) => {
-    // 点击滚动时短暂锁定，避免监听回写为上一个标题
-    setIsClickScrolling(true);
-    if (clickLockTimerRef.current) {
-      window.clearTimeout(clickLockTimerRef.current);
-    }
-    heading.node.scrollIntoView();
-    setCurHeading(heading);
-    clickLockTimerRef.current = window.setTimeout(() => {
-      setIsClickScrolling(false);
-    }, 400);
-  }, []);
+  const scrollTo = useCallback(
+    (heading: HeadingItem) => {
+      // 点击滚动时短暂锁定，避免监听回写为上一个标题
+      setIsClickScrolling(true);
+      if (clickLockTimerRef.current) {
+        window.clearTimeout(clickLockTimerRef.current);
+      }
+
+      // 使用 scrollTo 配合 offsetTop 进行精确滚动
+      const target = getCanScrollContainer();
+      if (target) {
+        const rect = heading.node.getBoundingClientRect();
+        const scrollTop =
+          target === window
+            ? window.pageYOffset + rect.top - offsetTop
+            : (target as HTMLElement).scrollTop + rect.top - offsetTop;
+
+        target.scrollTo({ top: scrollTop });
+      } else {
+        // 兜底方案
+        heading.node.scrollIntoView({ behavior: "smooth" });
+      }
+
+      setCurHeading(heading);
+      clickLockTimerRef.current = window.setTimeout(() => {
+        setIsClickScrolling(false);
+      }, 400);
+    },
+    [getCanScrollContainer, offsetTop]
+  );
   /**
    * 初始化目录结构
    */

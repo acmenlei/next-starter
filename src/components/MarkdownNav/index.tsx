@@ -17,6 +17,7 @@ interface Props {
   renderContainer?: string; // 渲染内容的容器
   data?: any;
   onVisibleChange?: (visible: boolean) => void;
+  offsetTop?: number;
 }
 
 /**
@@ -25,7 +26,15 @@ interface Props {
  * @constructor
  */
 const MarkdownNav: React.FC<Props> = (props) => {
-  const { data, scroller, renderContainer, visible, onVisibleChange } = props;
+  const {
+    data,
+    scroller,
+    renderContainer,
+    visible,
+    onVisibleChange,
+    offsetTop,
+  } = props;
+  console.log(offsetTop);
   const [hoverStatus, setHoverStatus] = useState(false);
   // 仅展示markdown格式的文章，且有1~4级目录
   if (!data?.content) {
@@ -108,6 +117,7 @@ const MarkdownNav: React.FC<Props> = (props) => {
           data={data}
           renderContainer={renderContainer}
           scroller={scroller?.current}
+          offsetTop={offsetTop}
         />
       </div>
     </div>

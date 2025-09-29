@@ -15,6 +15,7 @@ const Toc: React.FC<Props> = (props) => {
     <MarkdownNav
       data={article}
       visible={showToc}
+      offsetTop={60}
       renderContainer=".course-container"
       onVisibleChange={setShowToc}
     />
